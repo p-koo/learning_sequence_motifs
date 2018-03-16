@@ -1,2 +1,0 @@
-model_checkpoint_path: "scnn_25_4_best.ckpt"
-all_model_checkpoint_paths: "scnn_25_4_best.ckpt"
