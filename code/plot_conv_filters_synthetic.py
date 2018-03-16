@@ -23,7 +23,7 @@ params_path = utils.make_directory(results_path, 'model_params')
 save_path = utils.make_directory(results_path, 'conv_filters')
 
 # load dataset
-data_path = '../data/Synthetic_dataset.h5'
+data_path = '../data/synthetic_dataset.h5'
 train, valid, test = helper.load_synthetic_dataset(data_path)
 
 # get data shapes

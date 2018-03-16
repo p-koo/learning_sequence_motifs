@@ -16,7 +16,7 @@ all_models = ['cnn_2_50', 'cnn_4_25', 'cnn_10_10', 'cnn_25_4', 'cnn_50_2', 'cnn_
 			  'cnn_2_50_invariant', 'scnn_4_25', 'scnn_25_4']
 
 # save path
-results_path = utils.make_directory('../results', 'deepsea')
+results_path = utils.make_directory('../results', 'invivo')
 params_path = utils.make_directory(results_path, 'model_params')
 save_path = utils.make_directory(results_path, 'conv_filters')
 
