@@ -6,7 +6,6 @@ import os, sys
 import numpy as np
 import helper
 import tensorflow as tf
-sys.path.append('../..')
 from deepomics import neuralnetwork as nn
 from deepomics import utils, metrics
 

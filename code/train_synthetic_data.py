@@ -54,5 +54,5 @@ for model_name in all_models:
 	data = {'train': train, 'valid': valid, 'test': test}
 
 	# fit model
-	fit.train_minibatch(sess, nntrainer, data, batch_size=100, num_epochs=1,
+	fit.train_minibatch(sess, nntrainer, data, batch_size=100, num_epochs=100,
 		  patience=20, verbose=2, shuffle=True, save_all=False)

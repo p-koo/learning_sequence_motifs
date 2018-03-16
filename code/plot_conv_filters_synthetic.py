@@ -7,7 +7,6 @@ import numpy as np
 import helper
 import matplotlib.pyplot as plt
 import tensorflow as tf
-sys.path.append('../..')
 from deepomics import neuralnetwork as nn
 from deepomics import utils, visualize
 
