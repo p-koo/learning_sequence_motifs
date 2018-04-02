@@ -82,6 +82,7 @@ for model_name in all_models:
 
 
 with open(save_path, 'wb') as f:
+	f.write("%s\t%s\t%s\t%s\n"%('model', 'num_params', 'ave roc', 'ave pr'))
 	for i, model_name in enumerate(all_models):
 		mean_roc = np.mean(roc_scores[i])
 		std_roc = np.std(roc_scores[i])
@@ -89,10 +90,3 @@ with open(save_path, 'wb') as f:
 		std_pr = np.std(pr_scores[i])
 		num_params = num_params_all[i]
 		f.write("%s\t%d\t%.3f$\pm$%.3f\t%.3f$\pm$%.3f\n"%(model_name, num_params, mean_roc, std_roc, mean_pr, std_pr))
-
-	for i, model_name in enumerate(all_models):
-		f.write("%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n"%tuple(roc_scores[i]))
-	f.write("\n")
-	for i, model_name in enumerate(all_models):
-		f.write("%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n"%tuple(pr_scores[i]))
-	f.write("\n")

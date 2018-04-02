@@ -91,8 +91,8 @@ def import_model(model_name):
         from models import cnn_10 as genome_model
     elif model_name == 'cnn_25':
         from models import cnn_25 as genome_model
-    elif model_name == 'cnn_25':
-        from models import cnn_25 as genome_model
+    elif model_name == 'cnn_50':
+        from models import cnn_50 as genome_model
     elif model_name == 'cnn_100':
         from models import cnn_100 as genome_model
     elif model_name == 'cnn_50_2':

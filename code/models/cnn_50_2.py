@@ -5,7 +5,7 @@ def model(input_shape, output_shape):
                 'input_shape': input_shape # 1000
              }
     layer2 = {  'layer': 'conv1d',
-                'num_filters': 24,
+                'num_filters': 30,
                 'filter_size': 19,
                 'padding': 'SAME',
                 'norm': 'batch',
