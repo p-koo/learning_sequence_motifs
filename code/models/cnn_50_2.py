@@ -5,25 +5,26 @@ def model(input_shape, output_shape):
                 'input_shape': input_shape # 1000
              }
     layer2 = {  'layer': 'conv1d',
-                'num_filters': 30,
+                'num_filters': 24,
                 'filter_size': 19,
                 'padding': 'SAME',
                 'norm': 'batch',
                 'activation': 'relu',
                 'max_pool': 50, # 4
+                'max_pool_strides': 2,  # 100
                 'dropout': 0.1,
                 }
     layer3 = {  'layer': 'conv1d',
-               'num_filters': 128,
+               'num_filters': 64,
                'filter_size': 5,
                'padding': 'SAME',
                'norm': 'batch',
                'activation': 'relu',
                'dropout': 0.1,
-               'max_pool': 2, # 4
+               'max_pool': 50, # 4
                }
     layer4 = {  'layer': 'dense',
-               'num_units': 512,
+               'num_units': 96,
                'norm': 'batch',
                'activation': 'relu',
                'dropout': 0.5,

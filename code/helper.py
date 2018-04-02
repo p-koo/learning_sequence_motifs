@@ -83,24 +83,24 @@ def load_synthetic_TF_models(filepath, dataset='test'):
 def import_model(model_name):
 
     # get model
-    if model_name == 'cnn_2_50':
-        from models import cnn_2_50 as genome_model
-    elif model_name == 'cnn_4_25':
-        from models import cnn_4_25 as genome_model
-    elif model_name == 'cnn_10_10':
-        from models import cnn_10_10 as genome_model
-    elif model_name == 'cnn_25_4':
-        from models import cnn_25_4 as genome_model
+    if model_name == 'cnn_2':
+        from models import cnn_2 as genome_model
+    elif model_name == 'cnn_4':
+        from models import cnn_4 as genome_model
+    elif model_name == 'cnn_10':
+        from models import cnn_10 as genome_model
+    elif model_name == 'cnn_25':
+        from models import cnn_25 as genome_model
+    elif model_name == 'cnn_25':
+        from models import cnn_25 as genome_model
+    elif model_name == 'cnn_100':
+        from models import cnn_100 as genome_model
     elif model_name == 'cnn_50_2':
         from models import cnn_50_2 as genome_model
-    elif model_name == 'cnn_100_1':
-        from models import cnn_100_1 as genome_model
-    elif model_name == 'cnn_2_50_invariant':
-        from models import cnn_2_50_invariant as genome_model
-    elif model_name == 'scnn_4_25':
-        from models import scnn_4_25 as genome_model
-    elif model_name == 'scnn_25_4':
-        from models import scnn_25_4 as genome_model
+    elif model_name == 'cnn9_4':
+        from models import cnn9_4 as genome_model
+    elif model_name == 'cnn9_25':
+        from models import cnn9_25 as genome_model
 
     return genome_model
 
