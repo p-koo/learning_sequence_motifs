@@ -101,6 +101,10 @@ def import_model(model_name):
         from models import cnn9_4 as genome_model
     elif model_name == 'cnn9_25':
         from models import cnn9_25 as genome_model
+    elif model_name == 'cnn3_2':
+        from models import cnn3_2 as genome_model
+    elif model_name == 'cnn3_50':
+        from models import cnn3_50 as genome_model
 
     return genome_model
 
@@ -215,4 +219,55 @@ def mean_info_distance(backprop_saliency, X_model):
     info = np.array(info)
     mean_info = np.nanmean(info, axis=0)
     return mean_info
+
+
+
+def clip_filters(W, threshold=0.5, pad=3):
+    num_filters, _, filter_length = W.shape
+
+    W_clipped = []
+    for i in range(num_filters):
+        w = utils.normalize_pwm(W[i], factor=3)
+        entropy = np.log2(4) + np.sum(w*np.log2(w+1e-7), axis=0)
+        index = np.where(entropy > threshold)[0]
+        if index.any():
+            start = np.maximum(np.min(index)-pad, 0)
+            end = np.minimum(np.max(index)+pad+1, filter_length)
+            W_clipped.append(W[i,:,start:end])
+        else:
+            W_clipped.append(W[i,:,:])
+
+    return W_clipped
+
+
+
+def meme_generate(W, output_file='meme.txt', prefix='filter', factor=None):
+
+    # background frequency
+    nt_freqs = [1./4 for i in range(4)]
+
+    # open file for writing
+    f = open(output_file, 'w')
+
+    # print intro material
+    f.write('MEME version 4\n')
+    f.write('\n')
+    f.write('ALPHABET= ACGT\n')
+    f.write('\n')
+    f.write('Background letter frequencies:\n')
+    f.write('A %.4f C %.4f G %.4f T %.4f \n' % tuple(nt_freqs))
+    f.write('\n')
+
+    for j in range(len(W)):
+        if factor:
+            pwm = utils.normalize_pwm(W[j], factor=factor)
+        else:
+            pwm = W[j]
+        f.write('MOTIF %s%d \n' % (prefix, j))
+        f.write('letter-probability matrix: alength= 4 w= %d nsites= %d \n' % (pwm.shape[1], pwm.shape[1]))
+        for i in range(pwm.shape[1]):
+            f.write('%.4f %.4f %.4f %.4f \n' % tuple(pwm[:,i]))
+        f.write('\n')
+
+    f.close()
 

@@ -14,7 +14,8 @@ from deepomics import utils, visualize
 
 
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
-			  'cnn_50_2', 'cnn9_4', 'cnn9_25']
+			  'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_2', 'cnn3_50']
+all_models = ['cnn_50_2']
 
 # save path
 results_path = utils.make_directory('../results', 'synthetic')
@@ -72,3 +73,8 @@ for model_name in all_models:
 
 	output_file = os.path.join(save_path, model_name+'.meme')
 	utils.meme_generate(W, output_file, factor=3)
+
+	W = np.squeeze(np.transpose(W, [3, 2, 0, 1]))
+	W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
+	output_file = os.path.join(save_path, model_name+'_clip.meme')
+	helper.meme_generate(W_clipped, output_file, factor=3)

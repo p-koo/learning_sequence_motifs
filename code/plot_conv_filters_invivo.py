@@ -12,7 +12,9 @@ from deepomics import utils, visualize
 
 #------------------------------------------------------------------------------------------------
 
-all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100']
+
+all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
+			  'cnn_50_2', 'cnn9_4', 'cnn9_25']
 
 # save path
 results_path = utils.make_directory('../results', 'invivo')
@@ -61,11 +63,16 @@ for model_name in all_models:
 	W = nntrainer.get_parameters(sess, layer='conv1d_0')[0]
 
 	# plot 1st convolution layer filters
-	fig = visualize.plot_filter_logos(W, nt_width=50, height=100, norm_factor=3, num_rows=10)
-	fig.set_size_inches(100, 100)
-	outfile = os.path.join(save_path, model_name+'_conv_filters.pdf')
-	fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
-	plt.close()
+	#fig = visualize.plot_filter_logos(W, nt_width=50, height=100, norm_factor=3, num_rows=10)
+	#fig.set_size_inches(100, 100)
+	#outfile = os.path.join(save_path, model_name+'_conv_filters.pdf')
+	#fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
+	#plt.close()
 
-	output_file = os.path.join(save_path, model_name+'.meme')
-	utils.meme_generate(W, output_file, factor=3)
+	#output_file = os.path.join(save_path, model_name+'.meme')
+	#utils.meme_generate(W, output_file, factor=3)
+
+	W = np.squeeze(np.transpose(W, [3, 2, 0, 1]))
+	W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
+	output_file = os.path.join(save_path, model_name+'_clip.meme')
+	helper.meme_generate(W_clipped, output_file, factor=3)

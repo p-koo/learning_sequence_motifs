@@ -11,7 +11,8 @@ from deepomics import utils, fit
 
 #------------------------------------------------------------------------------------------------
 
-all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100']
+all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
+			  'cnn_50_2', 'cnn9_4', 'cnn9_25']
 
 # save path
 results_path = utils.make_directory('../results', 'invivo')
@@ -29,9 +30,6 @@ output_shape = [None, train['targets'].shape[1]]
 # loop through models
 for model_name in all_models:
 	print('model: ' + model_name)
-	tf.reset_default_graph()
-	tf.set_random_seed(247)
-	np.random.seed(247) # for reproducibility
 
 	# load model parameters
 	genome_model = helper.import_model(model_name)

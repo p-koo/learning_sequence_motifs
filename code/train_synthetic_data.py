@@ -12,7 +12,8 @@ from deepomics import utils, fit
 #------------------------------------------------------------------------------------------------
 
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
-			  'cnn_50_2', 'cnn9_4', 'cnn9_25']
+			  'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_50', 'cnn3_2']
+all_models = ['cnn_50_2']
 
 # save path
 results_path = utils.make_directory('../results', 'synthetic')
@@ -30,16 +31,13 @@ output_shape = [None, train['targets'].shape[1]]
 # loop through models
 for model_name in all_models:
 	print('model: ' + model_name)
-	tf.reset_default_graph()
-	tf.set_random_seed(247)
-	np.random.seed(247) # for reproducibility
 
 	# load model parameters
 	genome_model = helper.import_model(model_name)
 	model_layers, optimization = genome_model.model(input_shape, output_shape)
 
 	# build neural network class
-	nnmodel = nn.NeuralNet(seed=247)
+	nnmodel = nn.NeuralNet()
 	nnmodel.build_layers(model_layers, optimization, supervised=True)
 	nnmodel.inspect_layers()
 
