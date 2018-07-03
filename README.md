@@ -42,7 +42,7 @@ To visualize guided-backprop saliency maps:
 ## Overview of data
 
 * Due to size restrictions, the dataset is not included in the repository.  Each dataset can be easily created by running the python notebooks: Generate_synthetic_datasets.ipynb and Generate_invivo_datasets.ipynb
-* JASPAR_CORE_2016_vertebrates.meme contains a database of PWMS which is used for the Tomtom comparison search
+* JASPAR_CORE_2016_vertebrates.meme contains a database of PWMs which is used for the Tomtom comparison search
 * pfm_vertebrates.txt also contrains JASPAR motifs. This is the file that is used as ground truth for the synthetic dataset.
 
 ## Overview of results
