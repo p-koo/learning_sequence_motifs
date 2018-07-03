@@ -2,9 +2,8 @@
 
 This is a repository that contains datasets, scripts, and results of "Representation Learning of Genomic Sequence Motifs with Convolutional Neural Networks" by Peter K. Koo and Sean R. Eddy.
 
-The code here depends on Deepomics, a custom-written, high-level APIs written on top of Tensorflow to seamlessly build, train, test, and evaluate neural network models.  
+The code here depends on Deepomics, a custom-written, high-level APIs written on top of Tensorflow to seamlessly build, train, test, and evaluate neural network models.  WARNING: Deepomics is a required sub-repository.  To properly clone this repository, please use: 
 
-WARNING: This repository contains a sub-repository.  To download all repositories for proper function, please use:
 $ git clone --recursive https://github.com/p-koo/learning_sequence_motifs.git
 
 #### Dependencies
