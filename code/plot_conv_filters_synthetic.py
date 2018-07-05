@@ -71,10 +71,14 @@ for model_name in all_models:
 	fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
 	plt.close()
 
+	# save filters as a meme file for Tomtom 
 	output_file = os.path.join(save_path, model_name+'.meme')
 	utils.meme_generate(W, output_file, factor=3)
 
+	# clip filters about motif to reduce false-positive Tomtom matches 
 	W = np.squeeze(np.transpose(W, [3, 2, 0, 1]))
 	W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
+	
+	# since W is different format, have to use a different function
 	output_file = os.path.join(save_path, model_name+'_clip.meme')
-	helper.meme_generate(W_clipped, output_file, factor=3)
+	helper.meme_generate(W_clipped, output_file, factor=3) 

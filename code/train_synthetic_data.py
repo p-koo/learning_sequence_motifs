@@ -13,7 +13,6 @@ from deepomics import utils, fit
 
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
 			  'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_50', 'cnn3_2']
-all_models = ['cnn_50_2']
 
 # save path
 results_path = utils.make_directory('../results', 'synthetic')

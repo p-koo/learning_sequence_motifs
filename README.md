@@ -4,7 +4,7 @@ This is a repository that contains datasets and scripts to reproduce the results
 
 The code here depends on Deepomics, a custom-written, high-level APIs written on top of Tensorflow to seamlessly build, train, test, and evaluate neural network models.  WARNING: Deepomics is a required sub-repository.  To properly clone this repository, please use: 
 
-$ git clone --recursive https://github.com/p-koo/learning_sequence_motifs.git
+$ git clone --recursive \url{https://github.com/p-koo/learning_sequence_motifs.git}
 
 #### Dependencies
 * Tensorflow r1.0 or greater (preferably r1.4 or r1.5)

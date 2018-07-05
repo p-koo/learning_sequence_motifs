@@ -81,7 +81,7 @@ for model_name in all_models:
 	pr_all.append(pr_curves)
 	sess.close()
 
-
+# save results to file
 with open(save_path, 'wb') as f:
 	f.write("%s\t%s\t%s\t%s\n"%('model', 'num_params', 'ave roc', 'ave pr'))
 	for i, model_name in enumerate(all_models):

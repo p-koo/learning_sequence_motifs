@@ -1,11 +1,11 @@
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 
 import os, sys
 import h5py
 import numpy as np
-import tensorflow as tf
-from deepomics import neuralnetwork as nn
-from deepomics import utils, fit, visualize, saliency, metrics
+from deepomics import utils
 
 
 
@@ -107,119 +107,6 @@ def import_model(model_name):
         from models import cnn3_50 as genome_model
 
     return genome_model
-
-
-
-def backprop(X, params, layer='output', class_index=None, batch_size=128, method='guided', dataset='multitask'):
-    tf.reset_default_graph()
-
-    genome_model = helper.import_model(params['model_name'])
-    model_layers, optimization = genome_model.model(params['input_shape'], params['output_shape'])
-
-
-    nnmodel = nn.NeuralNet()
-    nnmodel.build_layers(model_layers, optimization, method=method, use_scope=True)
-    nntrainer = nn.NeuralTrainer(nnmodel, save='best', filepath=params['model_path'])
-
-    # setup session and restore optimal parameters
-    sess = utils.initialize_session(nnmodel.placeholders)
-    nntrainer.set_best_parameters(sess, params['model_path'], verbose=0)
-
-    # backprop saliency
-    if layer == 'output':
-        layer = list(nnmodel.network.keys())[-2]
-
-    saliency = nntrainer.get_saliency(sess, X, nnmodel.network[layer], class_index=class_index, batch_size=batch_size)
-
-    sess.close()
-    tf.reset_default_graph()
-    return saliency
-
-
-def stochastic_backprop(X, params, layer='output', class_index=None, batch_size=128,
-                       num_average=200, threshold=5.0, method='guided', dataset='multitask'):
-    tf.reset_default_graph()
-
-    # build new graph
-    #g = tf.get_default_graph()
-    #with g.gradient_override_map({'Relu': 'GuidedRelu'}):
-    if dataset == 'multitask':
-        model_layers, optimization, genome_model = load_multitask_model(params['model_name'], params['input_shape'], params['output_shape'],
-                                                       params['dropout_status'], params['l2_status'], params['bn_status'])
-    else:
-        model_layers, optimization, genome_model = load_regulatory_code_model(params['model_name'], params['input_shape'], params['output_shape'],
-                                                   params['dropout_status'], params['l2_status'], params['bn_status'])
-
-    nnmodel = nn.NeuralNet()
-    nnmodel.build_layers(model_layers, optimization, method=method, use_scope=True)
-    nntrainer = nn.NeuralTrainer(nnmodel, save='best', filepath=params['model_path'])
-
-    # setup session and restore optimal parameters
-    sess = utils.initialize_session(nnmodel.placeholders)
-    nntrainer.set_best_parameters(sess, params['model_path'], verbose=0)
-
-    # stochastic guided saliency
-    if layer == 'output':
-        layer = list(nnmodel.network.keys())[-2]
-        saliency, counts = nntrainer.get_stochastic_saliency(sess, X,nnmodel. network[layer], class_index=class_index,
-                                                    num_average=num_average, threshold=threshold)
-    else:
-        data = {'inputs': X}
-        layer_activations = nntrainer.get_activations(sess, data, layer)
-        max_activations = np.squeeze(np.max(layer_activations, axis=1))
-        active_indices = np.where(max_activations > 0)[0]
-        active_indices = active_indices[np.argsort(max_activations[active_indices])[::-1]]
-        saliency = []
-        counts = []
-        for neuron_index in active_indices:
-            val, count = nntrainer.get_stochastic_saliency(sess, X, nnmodel.network[layer], class_index=neuron_index,
-                                                    num_average=num_average, threshold=threshold)
-            saliency.append(val)
-            counts.append(count)
-
-    return saliency, np.array(counts) #np.vstack(saliency), np.array(counts)
-
-
-
-def entropy(X):
-    information = np.log2(4) - np.sum(-X*np.log2(X+1e-10),axis=0)
-    return information
-
-
-
-def cosine_distance(X_norm, X_model):
-
-    norm1 = np.sqrt(np.sum(X_norm**2, axis=0))
-    norm2 = np.sqrt(np.sum(X_model**2, axis=0))
-
-    dist = np.sum(X_norm*X_model, axis=0)/norm1/norm2
-    return dist
-
-
-
-def info_weighted_distance(X_saliency, X_model):
-
-    X_norm = utils.normalize_pwm(X_saliency, factor=3)
-    cd = cosine_distance(X_norm, X_model)
-    model_info = entropy(X_model)
-    good_info = np.sum(model_info*cd)/np.sum(model_info)
-
-    inv_model_info = -(model_info-2)
-    inv_cd = -(cd-1)
-    bad_info = np.sum(inv_cd*inv_model_info)/np.sum(inv_model_info)
-    return good_info, bad_info
-
-
-def mean_info_distance(backprop_saliency, X_model):
-    info = []
-    for j, gs in enumerate(backprop_saliency):
-        X_saliency = np.squeeze(gs).T
-        good_info, bad_info = info_weighted_distance(X_saliency, X_model[j])
-        info.append([good_info, bad_info])
-    info = np.array(info)
-    mean_info = np.nanmean(info, axis=0)
-    return mean_info
-
 
 
 def clip_filters(W, threshold=0.5, pad=3):
