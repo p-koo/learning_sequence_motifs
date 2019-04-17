@@ -14,8 +14,15 @@ from deepomics import utils, metrics
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
 			  'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_2', 'cnn3_50']
 
+all_models = ['cnn_2_exp_b3', 'cnn_2_exp_b2_norm', 'cnn_2_exp_b_norm2', 'cnn_2_exp_norm_b2', 'cnn_2_exp_norm2_b', 'cnn_2_exp_norm3', 
+              'cnn_2_relu_b3', 'cnn_2_relu_b2_norm', 'cnn_2_relu_b_norm2', 'cnn_2_relu_norm_b2', 'cnn_2_relu_norm2_b', 'cnn_2_relu_norm3', 
+              'cnn_2_exp_none_norm2', 'cnn_2_exp_none_b2', 'cnn_2_relu_none_norm2', 'cnn_2_relu_none_b2']
+                      
+
+#all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100']
+
 # save path
-results_path = utils.make_directory('../results', 'synthetic')
+results_path = utils.make_directory('../results', 'synthetic_activation_do_l2')
 params_path = utils.make_directory(results_path, 'model_params')
 save_path = os.path.join(results_path, 'performance_summary.tsv')
 

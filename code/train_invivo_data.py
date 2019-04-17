@@ -13,6 +13,7 @@ from deepomics import utils, fit
 
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
 			  'cnn_50_2', 'cnn9_4', 'cnn9_25']
+all_models = ['cnn_25']
 
 # save path
 results_path = utils.make_directory('../results', 'invivo')
@@ -36,7 +37,7 @@ for model_name in all_models:
 	model_layers, optimization = genome_model.model(input_shape, output_shape)
 
 	# build neural network class
-	nnmodel = nn.NeuralNet(seed=247)
+	nnmodel = nn.NeuralNet(seed=None)
 	nnmodel.build_layers(model_layers, optimization, supervised=True)
 	nnmodel.inspect_layers()
 

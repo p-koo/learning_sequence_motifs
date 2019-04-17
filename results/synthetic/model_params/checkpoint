@@ -1,2 +1,2 @@
-model_checkpoint_path: "cnn_50_2_best.ckpt"
-all_model_checkpoint_paths: "cnn_50_2_best.ckpt"
+model_checkpoint_path: "test_best.ckpt"
+all_model_checkpoint_paths: "test_best.ckpt"

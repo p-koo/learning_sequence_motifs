@@ -15,7 +15,9 @@ from deepomics import utils, visualize
 
 all_models = ['cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
 			  'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_2', 'cnn3_50']
-all_models = ['cnn_50_2']
+
+all_models = ['cnn9_4', 'cnn9_25']
+
 
 # save path
 results_path = utils.make_directory('../results', 'synthetic')
@@ -60,12 +62,13 @@ for model_name in all_models:
 
 	# set the best parameters
 	nntrainer.set_best_parameters(sess)
-
+	
 	# get 1st convolution layer filters
-	W = nntrainer.get_parameters(sess, layer='conv1d_0')[0]
+	fmap = nntrainer.get_activations(sess, test, layer='conv1d_0_active')
+	W = visualize.activation_pwm(fmap, X=test['inputs'], threshold=0.5, window=9)
 
 	# plot 1st convolution layer filters
-	fig = visualize.plot_filter_logos(W, nt_width=50, height=100, norm_factor=3, num_rows=10)
+	fig = visualize.plot_filter_logos(W, nt_width=50, height=100, norm_factor=None, num_rows=10)
 	fig.set_size_inches(100, 100)
 	outfile = os.path.join(save_path, model_name+'_conv_filters.pdf')
 	fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
@@ -73,7 +76,7 @@ for model_name in all_models:
 
 	# save filters as a meme file for Tomtom 
 	output_file = os.path.join(save_path, model_name+'.meme')
-	utils.meme_generate(W, output_file, factor=3)
+	utils.meme_generate(W, output_file, factor=None)
 
 	# clip filters about motif to reduce false-positive Tomtom matches 
 	W = np.squeeze(np.transpose(W, [3, 2, 0, 1]))
@@ -81,4 +84,4 @@ for model_name in all_models:
 	
 	# since W is different format, have to use a different function
 	output_file = os.path.join(save_path, model_name+'_clip.meme')
-	helper.meme_generate(W_clipped, output_file, factor=3) 
+	helper.meme_generate(W_clipped, output_file, factor=None) 

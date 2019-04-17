@@ -39,6 +39,7 @@ def model(input_shape, output_shape):
     optimization = {"objective": "binary",
                   "optimizer": "adam",
                   "learning_rate": 0.0003,
+                  "l1": 1e-6,
                   "l2": 1e-6,
                   }
 
