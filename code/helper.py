@@ -5,6 +5,7 @@ from __future__ import print_function
 import os, sys
 import h5py
 import numpy as np
+import pandas as pd
 from deepomics import utils
 
 
@@ -85,6 +86,12 @@ def import_model(model_name):
     # get model
     if model_name == 'cnn_2':
         from models import cnn_2 as genome_model
+    elif model_name == 'cnn_2_1':
+        from models import cnn_2_1 as genome_model
+    elif model_name == 'cnn_1':
+        from models import cnn_1 as genome_model
+    elif model_name == 'cnn_1_3':
+        from models import cnn_1_3 as genome_model
     elif model_name == 'cnn_4':
         from models import cnn_4 as genome_model
     elif model_name == 'cnn_10':
@@ -105,6 +112,17 @@ def import_model(model_name):
         from models import cnn3_2 as genome_model
     elif model_name == 'cnn3_50':
         from models import cnn3_50 as genome_model
+<<<<<<< HEAD
+    elif model_name == 'cnn_50_60':
+        from models import cnn_50_60 as genome_model
+    elif model_name == 'cnn_25_60':
+        from models import cnn_25_60 as genome_model
+    elif model_name == 'cnn_25_90':
+        from models import cnn_25_90 as genome_model
+    elif model_name == 'cnn_25_120':
+        from models import cnn_25_120 as genome_model
+        
+=======
     elif model_name == 'cnn_2_1':
         from models import cnn_2_1 as genome_model
 
@@ -141,6 +159,7 @@ def import_model(model_name):
         from models import cnn_2_relu_none_norm2 as genome_model
     elif model_name == 'cnn_2_relu_none_b2':
         from models import cnn_2_relu_none_b2 as genome_model
+>>>>>>> 30b2384ebf33e225b03b51f60ec621d4b7e10db3
 
     return genome_model
 
@@ -154,16 +173,15 @@ def clip_filters(W, threshold=0.5, pad=3):
     num_filters, _, filter_length = W.shape
 
     W_clipped = []
-    for i in range(num_filters):
-        w = utils.normalize_pwm(W[i], factor=3)
+    for w in W:
         entropy = np.log2(4) + np.sum(w*np.log2(w+1e-7), axis=0)
         index = np.where(entropy > threshold)[0]
         if index.any():
             start = np.maximum(np.min(index)-pad, 0)
             end = np.minimum(np.max(index)+pad+1, filter_length)
-            W_clipped.append(W[i,:,start:end])
+            W_clipped.append(w[:,start:end])
         else:
-            W_clipped.append(W[i,:,:])
+            W_clipped.append(w)
 
     return W_clipped
 
@@ -199,3 +217,46 @@ def meme_generate(W, output_file='meme.txt', prefix='filter', factor=None):
 
     f.close()
 
+
+def match_hits_to_ground_truth(file_path, motifs, size=30):
+    
+    # get dataframe for tomtom results
+    df = pd.read_csv(file_path, delimiter='\t')
+    
+    # loop through filters
+    best_qvalues = np.ones(size)
+    best_match = np.zeros(size)
+    for name in np.unique(df['#Query ID'].as_matrix()):
+        filter_index = int(name.split('r')[1])
+
+        # get tomtom hits for filter
+        subdf = df.loc[df['#Query ID'] == name]
+        targets = subdf['Target ID'].as_matrix()
+
+        # loop through ground truth motifs
+        for k, motif in enumerate(motifs): 
+
+            # loop through variations of ground truth motif
+            for motifid in motif: 
+
+                # check if there is a match
+                index = np.where((targets == motifid) ==  True)[0]
+                if len(index) > 0:
+                    qvalue = subdf['q-value'].as_matrix()[index]
+
+                    # check to see if better motif hit, if so, update
+                    if best_qvalues[filter_index] > qvalue:
+                        best_qvalues[filter_index] = qvalue
+                        best_match[filter_index] = k 
+
+    # get the minimum q-value for each motif
+    min_qvalue = np.zeros(13)
+    for i in range(13):
+        index = np.where(best_match == i)[0]
+        if len(index) > 0:
+            min_qvalue[i] = np.min(best_qvalues[index])
+
+    match_index = np.where(best_qvalues != 1)[0]
+    match_fraction = len(match_index)/float(size)
+
+    return best_qvalues, best_match, min_qvalue, match_fraction 
