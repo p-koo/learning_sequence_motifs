@@ -1,2 +1,0 @@
-model_checkpoint_path: "cnn_25_best.ckpt"
-all_model_checkpoint_paths: "cnn_25_best.ckpt"
