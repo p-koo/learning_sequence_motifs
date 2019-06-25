@@ -14,12 +14,12 @@ $ git clone --recursive \url{https://github.com/p-koo/learning_sequence_motifs.g
 ## Overview of the code
 
 To generate datasets:
-* code/Generate_synthetic_datasets.ipynb
-* code/Generate_invivo_datasets.ipynb
+* code/0_Generate_synthetic_datasets.ipynb
+* code/0_Generate_invivo_datasets.ipynb
 
 To train the models on the synthetic dataset and the in vivo dataset: 
-* code/0_train_synthetic.py 
-* code/0_train_invivo.py 
+* code/1_train_synthetic.py 
+* code/1_train_invivo.py 
 
 This script trains each model, evaluates the generalization performance of each model on the test set, and plots visualizations of 1st convolutional layer filters and saves a .meme file for the Tomtom search comparison tool. Each model can be found in /code/models/
 
