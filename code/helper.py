@@ -184,32 +184,34 @@ def match_hits_to_ground_truth(file_path, motifs, size=30):
     
     # get dataframe for tomtom results
     df = pd.read_csv(file_path, delimiter='\t')
-    
+
     # loop through filters
     best_qvalues = np.ones(size)
     best_match = np.zeros(size)
-    for name in np.unique(df['#Query ID'].as_matrix()):
-        filter_index = int(name.split('r')[1])
+    for name in np.unique(df['Query_ID'].as_matrix()):
 
-        # get tomtom hits for filter
-        subdf = df.loc[df['#Query ID'] == name]
-        targets = subdf['Target ID'].as_matrix()
+        if name[:6] == 'filter':
+            filter_index = int(name.split('r')[1])
 
-        # loop through ground truth motifs
-        for k, motif in enumerate(motifs): 
+            # get tomtom hits for filter
+            subdf = df.loc[df['Query_ID'] == name]
+            targets = subdf['Target_ID'].as_matrix()
 
-            # loop through variations of ground truth motif
-            for motifid in motif: 
+            # loop through ground truth motifs
+            for k, motif in enumerate(motifs): 
 
-                # check if there is a match
-                index = np.where((targets == motifid) ==  True)[0]
-                if len(index) > 0:
-                    qvalue = subdf['q-value'].as_matrix()[index]
+                # loop through variations of ground truth motif
+                for motifid in motif: 
 
-                    # check to see if better motif hit, if so, update
-                    if best_qvalues[filter_index] > qvalue:
-                        best_qvalues[filter_index] = qvalue
-                        best_match[filter_index] = k 
+                    # check if there is a match
+                    index = np.where((targets == motifid) ==  True)[0]
+                    if len(index) > 0:
+                        qvalue = subdf['q-value'].as_matrix()[index]
+
+                        # check to see if better motif hit, if so, update
+                        if best_qvalues[filter_index] > qvalue:
+                            best_qvalues[filter_index] = qvalue
+                            best_match[filter_index] = k 
 
     # get the minimum q-value for each motif
     min_qvalue = np.zeros(13)

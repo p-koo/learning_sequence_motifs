@@ -75,7 +75,7 @@ for model_name in all_models:
         trial_match_fraction = []
         trial_coverage = []
         for trial in range(num_trials):
-            file_path = os.path.join(save_path, model_name, 'tomtom.txt')
+            file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
             best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
             trial_qvalue.append(min_qvalue)
             trial_match_fraction.append(match_fraction)
