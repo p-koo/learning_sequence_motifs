@@ -112,7 +112,6 @@ def import_model(model_name):
         from models import cnn3_2 as genome_model
     elif model_name == 'cnn3_50':
         from models import cnn3_50 as genome_model
-<<<<<<< HEAD
     elif model_name == 'cnn_50_60':
         from models import cnn_50_60 as genome_model
     elif model_name == 'cnn_25_60':
@@ -121,45 +120,8 @@ def import_model(model_name):
         from models import cnn_25_90 as genome_model
     elif model_name == 'cnn_25_120':
         from models import cnn_25_120 as genome_model
-        
-=======
     elif model_name == 'cnn_2_1':
         from models import cnn_2_1 as genome_model
-
-    elif model_name == 'cnn_2_exp_b3':
-        from models import cnn_2_exp_b3 as genome_model
-    elif model_name == 'cnn_2_exp_b2_norm':
-        from models import cnn_2_exp_b2_norm as genome_model
-    elif model_name == 'cnn_2_exp_b_norm2':
-        from models import cnn_2_exp_b_norm2 as genome_model
-    elif model_name == 'cnn_2_exp_norm3':
-        from models import cnn_2_exp_norm3 as genome_model
-    elif model_name == 'cnn_2_exp_norm2_b':
-        from models import cnn_2_exp_norm2_b as genome_model
-    elif model_name == 'cnn_2_exp_norm_b2':
-        from models import cnn_2_exp_norm_b2 as genome_model
-    elif model_name == 'cnn_2_exp_none_norm2':
-        from models import cnn_2_exp_none_norm2 as genome_model
-    elif model_name == 'cnn_2_exp_none_b2':
-        from models import cnn_2_exp_none_b2 as genome_model
-
-    elif model_name == 'cnn_2_relu_b3':
-        from models import cnn_2_relu_b3 as genome_model
-    elif model_name == 'cnn_2_relu_b2_norm':
-        from models import cnn_2_relu_b2_norm as genome_model
-    elif model_name == 'cnn_2_relu_b_norm2':
-        from models import cnn_2_relu_b_norm2 as genome_model
-    elif model_name == 'cnn_2_relu_norm_b2':
-        from models import cnn_2_relu_norm_b2 as genome_model
-    elif model_name == 'cnn_2_relu_norm2_b':
-        from models import cnn_2_relu_norm2_b as genome_model
-    elif model_name == 'cnn_2_relu_norm3':
-        from models import cnn_2_relu_norm3 as genome_model
-    elif model_name == 'cnn_2_relu_none_norm2':
-        from models import cnn_2_relu_none_norm2 as genome_model
-    elif model_name == 'cnn_2_relu_none_b2':
-        from models import cnn_2_relu_none_b2 as genome_model
->>>>>>> 30b2384ebf33e225b03b51f60ec621d4b7e10db3
 
     return genome_model
 
