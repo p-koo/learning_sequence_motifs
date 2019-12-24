@@ -12,7 +12,7 @@ def model(input_shape, output_shape):
                 'activation': 'relu',
                 'dropout': 0.1,
                 }
-    layer2 = {  'layer': 'conv1d',
+    layer3 = {  'layer': 'conv1d',
                'num_filters': 128,
                'filter_size': 5,
                'padding': 'SAME',
@@ -20,7 +20,7 @@ def model(input_shape, output_shape):
                'activation': 'relu',
                'dropout': 0.1, # .3
                }
-    layer3 = {  'layer': 'conv1d',
+    layer4 = {  'layer': 'conv1d',
                'num_filters': 128,
                'filter_size': 5,
                'padding': 'SAME',
@@ -29,18 +29,18 @@ def model(input_shape, output_shape):
                'max_pool': 100,
                'dropout': 0.1, # .3
                }
-    layer4 = {  'layer': 'dense',
+    layer5 = {  'layer': 'dense',
                'num_units': 512,
                'norm': 'batch',
                'activation': 'relu',
                'dropout': 0.5, # .5
                }
-    layer5 = {  'layer': 'dense',
+    layer6 = {  'layer': 'dense',
                 'num_units': output_shape[1],
                 'activation': 'sigmoid',
                 }
 
-    model_layers = [layer1, layer2, layer3, layer4, layer5]
+    model_layers = [layer1, layer2, layer3, layer4, layer5, layer6]
 
     # optimization parameters
     optimization = {"objective": "binary",

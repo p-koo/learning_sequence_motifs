@@ -193,6 +193,10 @@ for trial in range(num_trials):
     helper.meme_generate(W_clipped, output_file, factor=None) 
 
 
+    # get 3rd convolution layer filters
+    fmap = nntrainer.get_activations(sess, test, layer='conv1d_2_active')
+    W = visualize.activation_pwm(fmap, X=test['inputs'], threshold=0.5, window=19)
+
     # plot 3rd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(0,30)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
@@ -234,3 +238,4 @@ for trial in range(num_trials):
     # since W is different format, have to use a different function
     output_file = os.path.join(save_path, model_name+'_3rd_layer_clip_'+str(trial)+'.meme')
     helper.meme_generate(W_clipped, output_file, factor=None) 
+
