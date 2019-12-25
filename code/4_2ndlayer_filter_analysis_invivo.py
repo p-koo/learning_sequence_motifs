@@ -167,7 +167,7 @@ for trial in range(num_trials):
     W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
 
     # since W is different format, have to use a different function
-    output_file = os.path.join(save_path, model_name+'_2st_layer_clip.meme')
+    output_file = os.path.join(save_path, model_name+'_1st_layer_clip.meme')
     helper.meme_generate(W_clipped, output_file, factor=None) 
 
     

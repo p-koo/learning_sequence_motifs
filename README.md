@@ -9,7 +9,7 @@ $ git clone --recursive \url{https://github.com/p-koo/learning_sequence_motifs.g
 #### Dependencies
 * Tensorflow r1.0 or greater (preferably r1.14 or r1.15)
 * Python dependencies: PIL, matplotlib, numpy, scipy (version 1.1.0), sklearn
-
+* meme suite (5.1.0)
 
 ## Overview of the code
 
