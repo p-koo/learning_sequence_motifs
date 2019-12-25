@@ -61,7 +61,7 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(0,30)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_0_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_0.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -69,7 +69,7 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(30,60)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_1_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_1.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -77,19 +77,19 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(60,90)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_2_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_2.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(90,120)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_3_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_3.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # save filters as a meme file for Tomtom 
-    output_file = os.path.join(save_path, model_name+'_2nd_layer_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_2nd_layer.meme')
     utils.meme_generate(W, output_file, factor=None)
 
     # clip filters about motif to reduce false-positive Tomtom matches 
@@ -97,7 +97,7 @@ for trial in range(num_trials):
     W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
 
     # since W is different format, have to use a different function
-    output_file = os.path.join(save_path, model_name+'_2nd_layer_clip_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_2nd_layer_clip.meme')
     helper.meme_generate(W_clipped, output_file, factor=None) 
 
 
@@ -146,6 +146,33 @@ for trial in range(num_trials):
     # set the best parameters
     nntrainer.set_best_parameters(sess)
 
+    # get 1st convolution layer filters
+    fmap = nntrainer.get_activations(sess, test, layer='conv1d_0_active')
+    W = visualize.activation_pwm(fmap, X=test['inputs'], threshold=0.5, window=19)
+
+    # plot 1st convolution layer filters
+    fig = visualize.plot_filter_logos(W, nt_width=50, height=100, norm_factor=None, num_rows=10)
+    fig.set_size_inches(100, 100)
+    outfile = os.path.join(save_path, model_name+'_filters_1st_layer.pdf')
+    fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
+    plt.close()
+
+
+    # save filters as a meme file for Tomtom 
+    output_file = os.path.join(save_path, model_name+'_1st_layer.meme')
+    utils.meme_generate(W, output_file, factor=None)
+
+    # clip filters about motif to reduce false-positive Tomtom matches 
+    W = np.squeeze(np.transpose(W, [3, 2, 0, 1]))
+    W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
+
+    # since W is different format, have to use a different function
+    output_file = os.path.join(save_path, model_name+'_2st_layer_clip.meme')
+    helper.meme_generate(W_clipped, output_file, factor=None) 
+
+    
+    #--------------------------------------------------------------------------------
+
     # get 2nd convolution layer filters
     fmap = nntrainer.get_activations(sess, test, layer='conv1d_1_active')
     W = visualize.activation_pwm(fmap, X=test['inputs'], threshold=0.5, window=19)
@@ -153,7 +180,7 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(0,30)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_0_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_0.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -161,7 +188,7 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(30,60)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_1_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_1.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -169,19 +196,19 @@ for trial in range(num_trials):
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(60,90)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_2_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_2.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # plot 2nd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(90,120)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_3_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_2nd_layer_3.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # save filters as a meme file for Tomtom 
-    output_file = os.path.join(save_path, model_name+'_2nd_layer_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_2nd_layer.meme')
     utils.meme_generate(W, output_file, factor=None)
 
     # clip filters about motif to reduce false-positive Tomtom matches 
@@ -189,10 +216,12 @@ for trial in range(num_trials):
     W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
 
     # since W is different format, have to use a different function
-    output_file = os.path.join(save_path, model_name+'_2nd_layer_clip_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_2nd_layer_clip.meme')
     helper.meme_generate(W_clipped, output_file, factor=None) 
 
 
+    #--------------------------------------------------------------------------------
+    
     # get 3rd convolution layer filters
     fmap = nntrainer.get_activations(sess, test, layer='conv1d_2_active')
     W = visualize.activation_pwm(fmap, X=test['inputs'], threshold=0.5, window=19)
@@ -200,7 +229,7 @@ for trial in range(num_trials):
     # plot 3rd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(0,30)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_0_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_0.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -208,7 +237,7 @@ for trial in range(num_trials):
     # plot 3rd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(30,60)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_1_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_1.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
@@ -216,19 +245,19 @@ for trial in range(num_trials):
     # plot 3rd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(60,90)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_2_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_2.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # plot 3rd convolution layer filters
     fig = visualize.plot_filter_logos(W[:,:,:,range(90,120)], nt_width=50, height=100, norm_factor=None, num_rows=10)
     fig.set_size_inches(100, 100)
-    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_3_'+str(trial)+'.pdf')
+    outfile = os.path.join(save_path, model_name+'_filters_3rd_layer_3.pdf')
     fig.savefig(outfile, format='pdf', dpi=200, bbox_inches='tight')
     plt.close()
 
     # save filters as a meme file for Tomtom 
-    output_file = os.path.join(save_path, model_name+'_3rd_layer_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_3rd_layer.meme')
     utils.meme_generate(W, output_file, factor=None)
 
     # clip filters about motif to reduce false-positive Tomtom matches 
@@ -236,6 +265,6 @@ for trial in range(num_trials):
     W_clipped = helper.clip_filters(W, threshold=0.5, pad=3)
 
     # since W is different format, have to use a different function
-    output_file = os.path.join(save_path, model_name+'_3rd_layer_clip_'+str(trial)+'.meme')
+    output_file = os.path.join(save_path, model_name+'_3rd_layer_clip.meme')
     helper.meme_generate(W_clipped, output_file, factor=None) 
 

@@ -27,18 +27,20 @@ motifnames = [ '','arid3', 'cebpb', 'fosl1', 'gabpa', 'mafk', 'max', 'mef2a', 'n
 
 #----------------------------------------------------------------------------------------------------
 
+
 all_models = ['cnn_1', 'cnn_2', 'cnn_4', 'cnn_10', 'cnn_25', 'cnn_50', 'cnn_100',
               'cnn_50_2', 'cnn9_4', 'cnn9_25', 'cnn3_50', 'cnn3_2', 'cnn_2_1',
               'cnn_25_60', 'cnn_25_90', 'cnn_25_120']
 
-num_trials = 5
 
+num_trials = 5
 
 # get performance statistics
 mean_roc_trial = {}
 mean_pr_trial = {}
 
 for trial in range(num_trials):
+    
     results_path = os.path.join('../results', 'synthetic_'+str(trial), 'results.tsv')
     df = pd.read_csv(results_path, delimiter='\t')
 
@@ -76,20 +78,22 @@ for model_name in all_models:
         trial_match_fraction = []
         trial_coverage = []
         for trial in range(num_trials):
-            file_path = os.path.join(save_path, model_name, 'tomtom.txt')
+            file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
             best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
+            
+            # store results
             trial_qvalue.append(min_qvalue)
             trial_match_fraction.append(match_fraction)
-            trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12)
-            
+            trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
             df = pd.read_csv(os.path.join(file_path), delimiter='\t')
-            trial_match_any.append(len(np.unique(df['#Query ID']))/30)
+            trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
 
         results_qvalue.append(trial_qvalue)
         results_match_fraction.append(trial_match_fraction)
         results_match_any.append(trial_match_any)
         results_coverage.append(trial_coverage)
     results_qvalue = np.array(results_qvalue)
+
     print("%s & %.3f$\pm$%.3f &  %.3f$\pm$%.3f &  %.3f$\pm$%.3f  \\\\"%(model_name, 
                                                   np.mean(mean_roc_trial[model_name]),
                                                   np.std(mean_roc_trial[model_name]),
@@ -97,6 +101,7 @@ for model_name in all_models:
                                                   np.std(results_match_any),
                                                   np.mean(results_match_fraction), 
                                                   np.std(results_match_fraction) ) )
+
 
 
 

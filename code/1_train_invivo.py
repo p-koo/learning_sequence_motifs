@@ -66,7 +66,7 @@ for trial in range(num_trials):
         data = {'train': train, 'valid': valid, 'test': test}
 
         # fit model
-        fit.train_minibatch(sess, nntrainer, data, batch_size=100, num_epochs=100,
+        fit.train_minibatch(sess, nntrainer, data, batch_size=32, num_epochs=100,
               patience=20, verbose=2, shuffle=True, save_all=False)
 
 
@@ -116,8 +116,9 @@ for trial in range(num_trials):
         # since W is different format, have to use a different function
         output_file = os.path.join(save_path, model_name+'_clip.meme')
         helper.meme_generate(W_clipped, output_file, factor=None) 
-
+        
         sess.close()
+
 
     # save results to file
     with open(os.path.join(results_path, 'results.tsv'), 'wb') as f:
