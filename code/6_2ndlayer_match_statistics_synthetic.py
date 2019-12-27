@@ -103,15 +103,15 @@ for trial in range(num_trials):
     results_path = os.path.join('../results', 'synthetic_'+str(trial))
     save_path = os.path.join(results_path, 'conv_filters')
 
-    file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
-    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
+    file_path = os.path.join(save_path, model_name+'_2ndlayer', 'tomtom.tsv')
+    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs, size=128)
         
     # store results
     trial_qvalue.append(min_qvalue)
     trial_match_fraction.append(match_fraction)
     trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
     df = pd.read_csv(os.path.join(file_path), delimiter='\t')
-    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
+    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/128) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
 
 print("%s & %.3f$\pm$%.3f &  %.3f$\pm$%.3f &  %.3f$\pm$%.3f  \\\\"%(model_name+'_2ndlayer', 
                                               np.mean(mean_roc_trial[model_name]),
@@ -133,7 +133,7 @@ for trial in range(num_trials):
     results_path = os.path.join('../results', 'synthetic_'+str(trial))
     save_path = os.path.join(results_path, 'conv_filters')
 
-    file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
+    file_path = os.path.join(save_path, model_name+'_1stlayer', 'tomtom.tsv')
     best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
         
     # store results
@@ -163,15 +163,15 @@ for trial in range(num_trials):
     results_path = os.path.join('../results', 'synthetic_'+str(trial))
     save_path = os.path.join(results_path, 'conv_filters')
 
-    file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
-    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
+    file_path = os.path.join(save_path, model_name+'_2ndlayer', 'tomtom.tsv')
+    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs, size=128)
         
     # store results
     trial_qvalue.append(min_qvalue)
     trial_match_fraction.append(match_fraction)
     trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
     df = pd.read_csv(os.path.join(file_path), delimiter='\t')
-    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
+    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/128) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
 
 print("%s & %.3f$\pm$%.3f &  %.3f$\pm$%.3f &  %.3f$\pm$%.3f  \\\\"%(model_name+'_2ndlayer',  
                                               np.mean(mean_roc_trial[model_name]),
@@ -195,15 +195,15 @@ for trial in range(num_trials):
     results_path = os.path.join('../results', 'synthetic_'+str(trial))
     save_path = os.path.join(results_path, 'conv_filters')
 
-    file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
-    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
+    file_path = os.path.join(save_path, model_name+'_3rdlayer', 'tomtom.tsv')
+    best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs, size=128)
         
     # store results
     trial_qvalue.append(min_qvalue)
     trial_match_fraction.append(match_fraction)
     trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
     df = pd.read_csv(os.path.join(file_path), delimiter='\t')
-    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
+    trial_match_any.append((len(np.unique(df['Query_ID']))-3)/128) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
 
 print("%s & %.3f$\pm$%.3f &  %.3f$\pm$%.3f &  %.3f$\pm$%.3f  \\\\"%(model_name+'_3rdlayer', 
                                               np.mean(mean_roc_trial[model_name]),
