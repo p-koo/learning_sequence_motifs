@@ -7,3 +7,9 @@ python 4_2ndlayer_filter_analysis_synthetic.py
 bash 5_2ndlayer_tomtom_synthetic.sh
 python 6_2ndlayer_match_statistics_synthetic.py
 
+#python 1_train_invivo.py
+#bash 2_tomtom_invivo.sh
+#python 3_match_statistics_invivo.py
+#python 4_2ndlayer_filter_analysis_invivo.py
+#bash 5_2ndlayer_tomtom_invivo.sh
+#python 6_2ndlayer_match_statistics_invivo.py

@@ -63,44 +63,33 @@ for trial in range(num_trials):
 
 print('Synthetic results')
 for model_name in all_models:
-    results_qvalue = []
-    results_match_fraction = []
-    results_match_any = []
-    results_coverage = []
+    trial_match_any = []
+    trial_qvalue = []
+    trial_match_fraction = []
+    trial_coverage = []
     for trial in range(num_trials):
 
         # save path
         results_path = os.path.join('../results', 'synthetic_'+str(trial))
         save_path = os.path.join(results_path, 'conv_filters')
 
-        trial_match_any = []
-        trial_qvalue = []
-        trial_match_fraction = []
-        trial_coverage = []
-        for trial in range(num_trials):
-            file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
-            best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
+        file_path = os.path.join(save_path, model_name, 'tomtom.tsv')
+        best_qvalues, best_match, min_qvalue, match_fraction  = helper.match_hits_to_ground_truth(file_path, motifs)
             
-            # store results
-            trial_qvalue.append(min_qvalue)
-            trial_match_fraction.append(match_fraction)
-            trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
-            df = pd.read_csv(os.path.join(file_path), delimiter='\t')
-            trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
-
-        results_qvalue.append(trial_qvalue)
-        results_match_fraction.append(trial_match_fraction)
-        results_match_any.append(trial_match_any)
-        results_coverage.append(trial_coverage)
-    results_qvalue = np.array(results_qvalue)
+        # store results
+        trial_qvalue.append(min_qvalue)
+        trial_match_fraction.append(match_fraction)
+        trial_coverage.append((len(np.where(min_qvalue != 1)[0])-1)/12) # percentage of motifs that are covered
+        df = pd.read_csv(os.path.join(file_path), delimiter='\t')
+        trial_match_any.append((len(np.unique(df['Query_ID']))-3)/30) # -3 is because new version of tomtom adds 3 lines of comments under Query_ID 
 
     print("%s & %.3f$\pm$%.3f &  %.3f$\pm$%.3f &  %.3f$\pm$%.3f  \\\\"%(model_name, 
                                                   np.mean(mean_roc_trial[model_name]),
                                                   np.std(mean_roc_trial[model_name]),
-                                                  np.mean(results_match_any), 
-                                                  np.std(results_match_any),
-                                                  np.mean(results_match_fraction), 
-                                                  np.std(results_match_fraction) ) )
+                                                  np.mean(trial_match_any), 
+                                                  np.std(trial_match_any),
+                                                  np.mean(trial_match_fraction), 
+                                                  np.std(trial_match_fraction) ) )
 
 
 
