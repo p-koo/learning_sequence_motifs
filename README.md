@@ -1,6 +1,6 @@
 # Learning Sequence Motifs
 
-This is a repository that contains datasets and scripts to reproduce the results of "Representation Learning of Genomic Sequence Motifs with Convolutional Neural Networks" by Peter K. Koo and Sean R. Eddy, which canbe found: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007560
+This is a repository that contains datasets and scripts to reproduce the results of "Representation Learning of Genomic Sequence Motifs with Convolutional Neural Networks" by Peter K. Koo and Sean R. Eddy, which can be found: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1007560 
 
 The code here depends on Deepomics, a custom-written, high-level APIs written on top of Tensorflow to seamlessly build, train, test, and evaluate neural network models.  WARNING: Deepomics is a required sub-repository.  To properly clone this repository, please use: 
 
