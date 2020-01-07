@@ -80,7 +80,7 @@ class NeuralNet:
 		if not supervised:
 			output_layer = 'X'
 		else:
-			output_layer = self.network.keys()[-1]
+			output_layer = list(self.network.keys())[-1]
 
 		# get predictions
 		self.predictions = self.network[output_layer].get_output()

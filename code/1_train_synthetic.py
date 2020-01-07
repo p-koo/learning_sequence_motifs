@@ -10,6 +10,7 @@ import tensorflow as tf
 from deepomics import neuralnetwork as nn
 from deepomics import utils, metrics, fit, visualize
 
+print(tf.__version__)
 #------------------------------------------------------------------------------------------------
 
 
@@ -120,7 +121,7 @@ for trial in range(num_trials):
 
 
     # save results to file
-    with open(os.path.join(results_path, 'results.tsv'), 'wb') as f:
+    with open(os.path.join(results_path, 'results.tsv'), 'w') as f:
         f.write("%s\t%s\t%s\t%s\n"%('model', 'num_params', 'ave roc', 'ave pr'))
         for i, model_name in enumerate(all_models):
             mean_roc = np.mean(roc_scores[i])

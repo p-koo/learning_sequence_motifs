@@ -1,15 +1,15 @@
 #!/bin/bash
 
-python 1_train_synthetic.py
-bash 2_tomtom_synthetic.sh
-python 3_match_statistics_synthetic.py
-python 4_2ndlayer_filter_analysis_synthetic.py
-bash 5_2ndlayer_tomtom_synthetic.sh
-python 6_2ndlayer_match_statistics_synthetic.py
+#CUDA_VISIBLE_DEVICES=1 python3 1_train_synthetic.py
+#CUDA_VISIBLE_DEVICES=1 bash 2_tomtom_synthetic.sh
+#CUDA_VISIBLE_DEVICES=1 python3 3_match_statistics_synthetic.py
+#CUDA_VISIBLE_DEVICES=1 python3 4_2ndlayer_filter_analysis_synthetic.py
+#CUDA_VISIBLE_DEVICES=1 bash 5_2ndlayer_tomtom_synthetic.sh
+#CUDA_VISIBLE_DEVICES=1 python3 6_2ndlayer_match_statistics_synthetic.py
 
-#python 1_train_invivo.py
-#bash 2_tomtom_invivo.sh
-#python 3_match_statistics_invivo.py
-#python 4_2ndlayer_filter_analysis_invivo.py
-#bash 5_2ndlayer_tomtom_invivo.sh
-#python 6_2ndlayer_match_statistics_invivo.py
+CUDA_VISIBLE_DEVICES=0 python3 1_train_invivo.py
+CUDA_VISIBLE_DEVICES=0 bash 2_tomtom_invivo.sh
+CUDA_VISIBLE_DEVICES=0 pytho3 3_match_statistics_invivo.py
+CUDA_VISIBLE_DEVICES=0 python3 4_2ndlayer_filter_analysis_invivo.py
+CUDA_VISIBLE_DEVICES=0 bash 5_2ndlayer_tomtom_invivo.sh
+CUDA_VISIBLE_DEVICES=0 python3 6_2ndlayer_match_statistics_invivo.py
